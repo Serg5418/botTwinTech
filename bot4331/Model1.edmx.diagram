@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e08bb41a24244ab2bc26bec5a96d1102" Name="Diagram1">
+        <EntityTypeShape EntityType="Ryzhkin_botModel.Application" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.Dialog_Info" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.InformationTablesValues" Width="1.5" PointX="5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.InformationTalbes" Width="1.5" PointX="2.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.Users" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.word_bot" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.word_users" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="Ryzhkin_botModel.FK_Dialog_Info_word_bot" ManuallyRouted="false" />
+        <AssociationConnector Association="Ryzhkin_botModel.FK_Dialog_Info_word_users" ManuallyRouted="false" />
+        <AssociationConnector Association="Ryzhkin_botModel.FK_InformationTablesValues_InformationTalbes" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.InformationClient" Width="1.5" PointX="7.375" PointY="3.75" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.YesOrNo" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Ryzhkin_botModel.usersApplications" Width="1.5" PointX="8.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

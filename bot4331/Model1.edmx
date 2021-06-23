@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Ryzhkin_botModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applications" Type="nvarchar(max)" />
+          <Property Name="idTable" Type="int" />
+        </EntityType>
+        <EntityType Name="Dialog_Info">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id_word_users" Type="int" Nullable="false" />
+          <Property Name="Id_word_bot" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Ryzhkin_bot.dbo.InformationClient" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="InformationClient">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="text" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="text" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InformationTablesValues">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="idTable" Type="int" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InformationTalbes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idChat" Type="bigint" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="20" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="usersApplications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="applications" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="idChat" Type="bigint" />
+          <Property Name="condition" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="word_bot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="word_users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="text" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Ryzhkin_bot.dbo.YesOrNo" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="YesOrNo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Text" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="111" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Dialog_Info_word_bot">
+          <End Role="word_bot" Type="Self.word_bot" Multiplicity="1" />
+          <End Role="Dialog_Info" Type="Self.Dialog_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="word_bot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dialog_Info">
+              <PropertyRef Name="Id_word_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dialog_Info_word_users">
+          <End Role="word_users" Type="Self.word_users" Multiplicity="1" />
+          <End Role="Dialog_Info" Type="Self.Dialog_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="word_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dialog_Info">
+              <PropertyRef Name="Id_word_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationTablesValues_InformationTalbes">
+          <End Role="InformationTalbes" Type="Self.InformationTalbes" Multiplicity="1" />
+          <End Role="InformationTablesValues" Type="Self.InformationTablesValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InformationTalbes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InformationTablesValues">
+              <PropertyRef Name="idTable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Ryzhkin_botModelContainer">
+          <EntitySet Name="Application" EntityType="Self.Application" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dialog_Info" EntityType="Self.Dialog_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformationTablesValues" EntityType="Self.InformationTablesValues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformationTalbes" EntityType="Self.InformationTalbes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usersApplications" EntityType="Self.usersApplications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="word_bot" EntityType="Self.word_bot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="word_users" EntityType="Self.word_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformationClient" EntityType="Self.InformationClient" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InformationClient].[id] AS [id], 
+    [InformationClient].[text] AS [text]
+    FROM [dbo].[InformationClient] AS [InformationClient]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="YesOrNo" EntityType="Self.YesOrNo" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [YesOrNo].[id] AS [id], 
+    [YesOrNo].[Text] AS [Text]
+    FROM [dbo].[YesOrNo] AS [YesOrNo]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Dialog_Info_word_bot" Association="Self.FK_Dialog_Info_word_bot">
+            <End Role="word_bot" EntitySet="word_bot" />
+            <End Role="Dialog_Info" EntitySet="Dialog_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dialog_Info_word_users" Association="Self.FK_Dialog_Info_word_users">
+            <End Role="word_users" EntitySet="word_users" />
+            <End Role="Dialog_Info" EntitySet="Dialog_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationTablesValues_InformationTalbes" Association="Self.FK_InformationTablesValues_InformationTalbes">
+            <End Role="InformationTalbes" EntitySet="InformationTalbes" />
+            <End Role="InformationTablesValues" EntitySet="InformationTablesValues" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Ryzhkin_botModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applications" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idTable" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Dialog_Info">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_word_users" Type="Int32" Nullable="false" />
+          <Property Name="Id_word_bot" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="word_bot" Relationship="Self.FK_Dialog_Info_word_bot" FromRole="Dialog_Info" ToRole="word_bot" />
+          <NavigationProperty Name="word_users" Relationship="Self.FK_Dialog_Info_word_users" FromRole="Dialog_Info" ToRole="word_users" />
+        </EntityType>
+        <EntityType Name="InformationTablesValues">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idTable" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InformationTalbes" Relationship="Self.FK_InformationTablesValues_InformationTalbes" FromRole="InformationTablesValues" ToRole="InformationTalbes" />
+        </EntityType>
+        <EntityType Name="InformationTalbes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="InformationTablesValues" Relationship="Self.FK_InformationTablesValues_InformationTalbes" FromRole="InformationTalbes" ToRole="InformationTablesValues" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idChat" Type="Int64" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="word_bot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dialog_Info" Relationship="Self.FK_Dialog_Info_word_bot" FromRole="word_bot" ToRole="Dialog_Info" />
+        </EntityType>
+        <EntityType Name="word_users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dialog_Info" Relationship="Self.FK_Dialog_Info_word_users" FromRole="word_users" ToRole="Dialog_Info" />
+        </EntityType>
+        <Association Name="FK_Dialog_Info_word_bot">
+          <End Role="word_bot" Type="Self.word_bot" Multiplicity="1" />
+          <End Role="Dialog_Info" Type="Self.Dialog_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="word_bot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dialog_Info">
+              <PropertyRef Name="Id_word_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dialog_Info_word_users">
+          <End Role="word_users" Type="Self.word_users" Multiplicity="1" />
+          <End Role="Dialog_Info" Type="Self.Dialog_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="word_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dialog_Info">
+              <PropertyRef Name="Id_word_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationTablesValues_InformationTalbes">
+          <End Role="InformationTalbes" Type="Self.InformationTalbes" Multiplicity="1" />
+          <End Role="InformationTablesValues" Type="Self.InformationTablesValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InformationTalbes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InformationTablesValues">
+              <PropertyRef Name="idTable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Ryzhkin_botEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Application" EntityType="Self.Application" />
+          <EntitySet Name="Dialog_Info" EntityType="Self.Dialog_Info" />
+          <EntitySet Name="InformationTablesValues" EntityType="Self.InformationTablesValues" />
+          <EntitySet Name="InformationTalbes" EntityType="Self.InformationTalbes" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="word_bot" EntityType="Self.word_bot" />
+          <EntitySet Name="word_users" EntityType="Self.word_users" />
+          <AssociationSet Name="FK_Dialog_Info_word_bot" Association="Self.FK_Dialog_Info_word_bot">
+            <End Role="word_bot" EntitySet="word_bot" />
+            <End Role="Dialog_Info" EntitySet="Dialog_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dialog_Info_word_users" Association="Self.FK_Dialog_Info_word_users">
+            <End Role="word_users" EntitySet="word_users" />
+            <End Role="Dialog_Info" EntitySet="Dialog_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationTablesValues_InformationTalbes" Association="Self.FK_InformationTablesValues_InformationTalbes">
+            <End Role="InformationTalbes" EntitySet="InformationTalbes" />
+            <End Role="InformationTablesValues" EntitySet="InformationTablesValues" />
+          </AssociationSet>
+          <EntitySet Name="InformationClient" EntityType="Ryzhkin_botModel.InformationClient" />
+          <EntitySet Name="YesOrNo" EntityType="Ryzhkin_botModel.YesOrNo" />
+          <EntitySet Name="usersApplications" EntityType="Ryzhkin_botModel.usersApplications" />
+        </EntityContainer>
+        <EntityType Name="InformationClient">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="text" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="YesOrNo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Text" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="111" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="usersApplications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="applications" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idChat" Type="Int64" />
+          <Property Name="condition" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Ryzhkin_botModelContainer" CdmEntityContainer="Ryzhkin_botEntities">
+          <EntitySetMapping Name="Application">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.Application">
+              <MappingFragment StoreEntitySet="Application">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="applications" ColumnName="applications" />
+                <ScalarProperty Name="idTable" ColumnName="idTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dialog_Info">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.Dialog_Info">
+              <MappingFragment StoreEntitySet="Dialog_Info">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_word_users" ColumnName="Id_word_users" />
+                <ScalarProperty Name="Id_word_bot" ColumnName="Id_word_bot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformationTablesValues">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.InformationTablesValues">
+              <MappingFragment StoreEntitySet="InformationTablesValues">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idTable" ColumnName="idTable" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformationTalbes">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.InformationTalbes">
+              <MappingFragment StoreEntitySet="InformationTalbes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="idChat" ColumnName="idChat" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="word_bot">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.word_bot">
+              <MappingFragment StoreEntitySet="word_bot">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="text" ColumnName="text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="word_users">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.word_users">
+              <MappingFragment StoreEntitySet="word_users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="text" ColumnName="text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformationClient">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.InformationClient">
+              <MappingFragment StoreEntitySet="InformationClient">
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YesOrNo">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.YesOrNo">
+              <MappingFragment StoreEntitySet="YesOrNo">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usersApplications">
+            <EntityTypeMapping TypeName="Ryzhkin_botModel.usersApplications">
+              <MappingFragment StoreEntitySet="usersApplications">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="condition" ColumnName="condition" />
+                <ScalarProperty Name="idChat" ColumnName="idChat" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="applications" ColumnName="applications" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
